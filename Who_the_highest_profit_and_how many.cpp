@@ -7,15 +7,6 @@
 
 using namespace std;
 
-double getSales(){
-    //return ;
-}
-
-void findHighest(int a, int b){
-    //int maxv;
-    //maxv = max(a, b);
-}
-
 int main() {
     int NE, SE, NW, SW;
     int i, x, z;
