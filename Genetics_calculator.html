@@ -1,0 +1,721 @@
+<!doctype html>
+<html>
+<head>
+	<title>Kalkulator Genetika</title>
+	<style>
+		body{
+			background-image: url("image/gen-back.jpg"); font-family: comic sans ms;
+		}
+		#place{
+			background: #00cc37; border: green solid; border-radius: 5px; opacity: 0.95; width: 70%; margin: 10% 15%; text-align: center;
+		}
+		#place-title{
+			background: #00ff45; border: green solid; border-radius: 5px; padding: 0 1%; width: 18%;
+		}
+		#main{
+			background: #00cc37; border: #00cc37 solid; 
+		}
+		#legend{
+			text-align: left; margin: 3% 0 0 0; 
+		}
+		#pick{
+			height: 30px; border-radius: 5px; font-family: comic sans ms;
+		}
+		#gen-table1{ 
+			border: solid green; float: left; width: 60%; border-radius: 5px; background: #61e121; 
+		}
+		#gen-table2{
+			border: solid green; float: left; width: 60%; border-radius: 5px; background: #61e121; display: none;
+		}
+		#gen-input1, #gen-input2{
+			width: 13%; margin: 2% 0 0 0; border-radius: 7px; font-family: comic sans ms; text-align: center; 
+		}
+		#gamet1, #gamet2, #gamet3, #gamet4, #gamet5, #gamet6, #gamet1-value, #gamet2-value, #gamet3-value, #gamet4-value, #gamet5-value, #gamet6-value{
+			display: none;
+		}
+		#gamet0-value, #gamet1-value, #gamet2-value, #gamet3-value, #gamet4-value, #gamet5-value, #gamet6-value{
+			width: 10%; border-radius: 7px; font-family: comic sans ms; text-align: center; margin: 0 0 3% 0;
+		}
+		.gen-output{
+			width: 90%; background: #61e121; border: green 1px; font-family: comic sans ms; height: 25px;
+		}
+		.dict{
+			width: 35%; float: right; border-left: green solid 2px;
+		}
+		#go{
+			width: 7%;background: yellow; border: green solid; border-radius: 5px; padding: 0.5% 1%; font: 17px comic sans ms; margin: 3% 47%;
+		}
+		#go2{
+			width: 7%;background: yellow; border: green solid; border-radius: 5px; padding: 0.5% 1%; font: 17px comic sans ms; margin: 3% 47%; display: none;
+		}
+		#go:hover, #go2:hover{
+			background: #ccff00;
+		}
+		#copy{
+			border-top: solid green 1px; padding: 0 3%;
+		}
+	</style>
+</head>
+<body>
+	<!--summary-->
+	<fieldset id="place">	
+		<legend id="place-title">Kalkulator Genetika</legend>
+		<fieldset id="main">
+			<!--pick-->
+			<legend id="legend">
+				<select onchange="cases()" id="pick">
+					<option>Monohibrid dominan</option>
+					<option>Monohibrid intermediet</option>
+					<option>Dihibrid dominan</option>
+					<option>Dihibrid intermediet</option>
+					
+					<optgroup label="Kelainan :">
+						<option>Albino</option>
+						<option>Buta warna</option>
+						<option>Hemofilia</option>
+					</optgroup>
+				</select>
+			</legend>
+			<p>Hasil antara <input type="text" id="gen-input1" onmouseout="setGamet()"> dan <input type="text" id="gen-input2" onmouseout="setGamet()"></p>
+			
+			<!--gamet-->
+			<p>
+				<span id="gamet1"></span><input type="text" id="gamet1-value">
+				<span id="gamet2"></span><input type="text" id="gamet2-value">
+				<span id="gamet3"></span><input type="text" id="gamet3-value">
+				<br>
+				<span id="gamet4"></span><input type="text" id="gamet4-value">
+				<span id="gamet5"></span><input type="text" id="gamet5-value">
+				<span id="gamet6"></span><input type="text" id="gamet6-value">
+			</p>
+			
+			<!--table-->
+			<table id="gen-table1" border="2">
+				<tr>
+					<td>Gamet</td>
+					<td><input type="text" class="gen-output" id="row1"></td>
+					<td><input type="text" class="gen-output" id="row2"></td>
+				</tr>
+				<tr>
+					<td><input type="text" class="gen-output" id="col1"></td>
+					<td id="output-col1"></td>
+					<td id="output-col2"></td>
+				</tr>
+				<tr>
+					<td><input type="text" class="gen-output" id="col2"></td>
+					<td id="output-col3"></td>
+					<td id="output-col4"></td>
+				</tr>
+			</table>
+			
+			<!--table2-->
+			<table id="gen-table2" border="2">
+				<tr>
+					<td>Gamet</td>
+					<td><input type="text" class="gen-output" id="-row1"></td>
+					<td><input type="text" class="gen-output" id="-row2"></td>
+					<td><input type="text" class="gen-output" id="-row3"></td>
+					<td><input type="text" class="gen-output" id="-row4"></td>
+				</tr>                                       
+				<tr>                                        
+					<td><input type="text" class="gen-output" id="-col1"></td>
+					<td id="-output-col1"></td>
+					<td id="-output-col2"></td>
+					<td id="-output-col3"></td>
+					<td id="-output-col4"></td>
+				</tr>
+				<tr>
+					<td><input type="text" class="gen-output" id="-col2"></td>
+					<td id="-output-col5"></td>
+					<td id="-output-col6"></td>
+					<td id="-output-col7"></td>
+					<td id="-output-col8"></td>
+				</tr>
+				<tr>
+					<td><input type="text" class="gen-output" id="-col3"></td>
+					<td id="-output-col9"></td>
+					<td id="-output-col10"></td>
+					<td id="-output-col11"></td>
+					<td id="-output-col12"></td>
+				</tr>
+				<tr>
+					<td><input type="text" class="gen-output" id="-col4"></td>
+					<td id="-output-col13"></td>
+					<td id="-output-col14"></td>
+					<td id="-output-col15"></td>
+					<td id="-output-col16"></td>
+				</tr>
+			</table>
+			
+			<!--dict-->
+			<div class="dict">	
+				<p>
+				Kamus genetik:<br>
+				Monohibrid = Persilangan 1 sifat beda.<br>
+				Dihibrid = Persilangan 2 sifat beda.<br>
+				Dominan = Sifat yg menutupi sifat lain.<br>
+				Resesif = Sifat yg ditutupi sifat lain.<br>
+				Intermediet = Sifat campuran.<br>
+				Carrier = Pembawa sifat.
+				</p>
+			</div>	
+			<button id="go" onclick="GO()">GO !</button>
+			<button id="go2" onclick="GO2()">GO !</button>
+		</fieldset>
+		<span id="copy">&copy;Teens_app2017</span>
+	</fieldset>
+	<script>
+		function cases() {
+			// pick cases
+			var pick= document.getElementById("pick").value;
+			var gentable1= document.getElementById("gen-table1");
+			var gentable2= document.getElementById("gen-table2");
+			var go= document.getElementById("go");
+			var go2= document.getElementById("go2");
+			
+			// monohibrid & diseaster mode
+			if ( pick == "Monohibrid dominan" || pick == "Monohibrid intermediet" ) {
+				gentable1.style.display = "inline";
+				gentable2.style.display = "none";
+				go.style.display = "inline";
+				go2.style.display = "none";
+				
+				document.getElementById("gamet1-value").value = "";
+				document.getElementById("gamet2-value").value = "";
+				document.getElementById("gamet3-value").value = "";
+				
+				document.getElementById("gamet1").style.display = "none";
+				document.getElementById("gamet2").style.display = "none";
+				document.getElementById("gamet3").style.display = "none";
+				document.getElementById("gamet1-value").style.display = "none";
+				document.getElementById("gamet2-value").style.display = "none";
+				document.getElementById("gamet3-value").style.display = "none";
+			}
+			
+			// dihibrid mode
+			if ( pick == "Dihibrid dominan" || pick == "Dihibrid intermediet") {
+				gentable1.style.display = "none";
+				gentable2.style.display = "inline";
+				go.style.display = "none";
+				go2.style.display = "inline";
+				
+				document.getElementById("gamet1-value").value = "";
+				document.getElementById("gamet2-value").value = "";
+				document.getElementById("gamet3-value").value = "";
+				
+				document.getElementById("gamet1").style.display = "none";
+				document.getElementById("gamet2").style.display = "none";
+				document.getElementById("gamet3").style.display = "none";
+				document.getElementById("gamet1-value").style.display = "none";
+				document.getElementById("gamet2-value").style.display = "none";
+				document.getElementById("gamet3-value").style.display = "none";
+			}
+			
+			// Albino mode
+			if ( pick == "Albino") {
+				document.getElementById("gamet1").style.display = "inline";
+				document.getElementById("gamet2").style.display = "inline";
+				document.getElementById("gamet3").style.display = "none";
+				document.getElementById("gamet4").style.display = "none";
+				document.getElementById("gamet5").style.display = "none";
+				document.getElementById("gamet6").style.display = "none";
+				document.getElementById("gamet1-value").style.display = "inline";
+				document.getElementById("gamet2-value").style.display = "inline";
+				document.getElementById("gamet3-value").style.display = "none";
+				document.getElementById("gamet4-value").style.display = "none";
+				document.getElementById("gamet5-value").style.display = "none";
+				document.getElementById("gamet6-value").style.display = "none";
+				
+				document.getElementById("gamet1").innerHTML = "A " + "=";
+				document.getElementById("gamet2").innerHTML = "a " + "=";
+				
+				document.getElementById("gamet1-value").value = "normal";
+				document.getElementById("gamet2-value").value = "albino";
+			} 
+			
+			// Color blind mode
+			if ( pick == "Buta warna") {
+				document.getElementById("gamet1").style.display = "inline";
+				document.getElementById("gamet2").style.display = "inline";
+				document.getElementById("gamet3").style.display = "inline";
+				document.getElementById("gamet4").style.display = "none";
+				document.getElementById("gamet5").style.display = "none";
+				document.getElementById("gamet6").style.display = "none";
+				document.getElementById("gamet1-value").style.display = "inline";
+				document.getElementById("gamet2-value").style.display = "inline";
+				document.getElementById("gamet3-value").style.display = "inline";
+				document.getElementById("gamet4-value").style.display = "none";
+				document.getElementById("gamet5-value").style.display = "none";
+				document.getElementById("gamet6-value").style.display = "none";
+				
+				document.getElementById("gamet1").innerHTML = "Y " + "=";
+				document.getElementById("gamet2").innerHTML = "X " + "=";
+				document.getElementById("gamet3").innerHTML = "x " + "=";
+				
+				document.getElementById("gamet1-value").value = "pria normal";
+				document.getElementById("gamet2-value").value = "wanita normal";
+				document.getElementById("gamet3-value").value = "buta warna";
+			} 
+			
+			// Color blind mode
+			if ( pick == "Hemofilia") {
+				document.getElementById("gamet1").style.display = "inline";
+				document.getElementById("gamet2").style.display = "inline";
+				document.getElementById("gamet3").style.display = "inline";
+				document.getElementById("gamet4").style.display = "none";
+				document.getElementById("gamet5").style.display = "none";
+				document.getElementById("gamet6").style.display = "none";
+				document.getElementById("gamet1-value").style.display = "inline";
+				document.getElementById("gamet2-value").style.display = "inline";
+				document.getElementById("gamet3-value").style.display = "inline";
+				document.getElementById("gamet4-value").style.display = "none";
+				document.getElementById("gamet5-value").style.display = "none";
+				document.getElementById("gamet6-value").style.display = "none";
+				
+				document.getElementById("gamet1").innerHTML = "Y " + "=";
+				document.getElementById("gamet2").innerHTML = "X " + "=";
+				document.getElementById("gamet3").innerHTML = "x " + "=";
+				
+				document.getElementById("gamet1-value").value = "pria normal";
+				document.getElementById("gamet2-value").value = "wanita normal";
+				document.getElementById("gamet3-value").value = "hemofilia";
+			} 
+		}
+	</script>	
+	<script>	
+		function setGamet() {
+			// automatics gamet inner
+			var geninput1= document.getElementById("gen-input1").value;//Mm
+			var geninput2= document.getElementById("gen-input2").value;//Mm
+			
+			var pick= document.getElementById("pick").value;
+		
+			document.getElementById("gamet1").innerHTML = geninput1[0].toUpperCase() + " = ";//M :
+			document.getElementById("gamet2").innerHTML = geninput1[0].toLowerCase() + " = ";//m :
+			document.getElementById("gamet3").innerHTML = geninput1[0].toUpperCase() + geninput1[0].toLowerCase() + " = ";//Mm :
+		    
+			// Dihibrid mode
+			if (pick == "Dihibrid dominan" || pick == "Dihibrid intermediet") {
+				document.getElementById("gamet4").innerHTML = geninput1[2].toUpperCase() + " = ";//Mm :
+				document.getElementById("gamet5").innerHTML = geninput1[2].toLowerCase() + " = ";//Mm :
+				document.getElementById("gamet6").innerHTML = geninput1[2].toUpperCase() + geninput1[2].toLowerCase() + " = ";//Mm :
+			}
+			
+			// albino mode
+			if (pick == "Albino") {
+				document.getElementById("gamet1").innerHTML = "A " + "=";
+				document.getElementById("gamet2").innerHTML = "a " + "=";
+			}
+			
+			// color blind & hemofilia mode
+			if (pick == "Buta warna" || pick== "Hemofilia") {
+				document.getElementById("gamet1").innerHTML = "Y " + "=";
+				document.getElementById("gamet2").innerHTML = "X " + "=";
+				document.getElementById("gamet3").innerHTML = "x " + "=";
+			}
+			
+			// default
+			document.getElementById("gamet1").style.display = "inline";
+			document.getElementById("gamet2").style.display = "inline";
+			document.getElementById("gamet1-value").style.display = "inline";
+			document.getElementById("gamet2-value").style.display = "inline";
+				
+			// monohibrid-dominan mode
+			if (pick == "Monohibrid dominan") {
+				document.getElementById("gamet3").style.display = "none";
+				document.getElementById("gamet4").style.display = "none";
+				document.getElementById("gamet5").style.display = "none";
+				document.getElementById("gamet6").style.display = "none";
+				document.getElementById("gamet3-value").style.display = "none";
+				document.getElementById("gamet4-value").style.display = "none";
+				document.getElementById("gamet5-value").style.display = "none";
+				document.getElementById("gamet6-value").style.display = "none";
+			}
+			
+			// monohibrid-intermediet mode
+			if (pick == "Monohibrid intermediet") {
+				document.getElementById("gamet3").style.display = "inline";
+				document.getElementById("gamet4").style.display = "none";
+				document.getElementById("gamet5").style.display = "none";
+				document.getElementById("gamet6").style.display = "none";
+				document.getElementById("gamet3-value").style.display = "inline";
+				document.getElementById("gamet4-value").style.display = "none";
+				document.getElementById("gamet5-value").style.display = "none";
+				document.getElementById("gamet6-value").style.display = "none";
+			}
+			
+			// dihibrid-dominan mode
+			if (pick == "Dihibrid dominan") {
+				document.getElementById("gamet3").style.display = "none";
+				document.getElementById("gamet4").style.display = "inline";
+				document.getElementById("gamet5").style.display = "inline";
+				document.getElementById("gamet6").style.display = "none";
+				document.getElementById("gamet3-value").style.display = "none";
+				document.getElementById("gamet4-value").style.display = "inline";
+				document.getElementById("gamet5-value").style.display = "inline";
+				document.getElementById("gamet6-value").style.display = "none";
+			}
+			
+			// dihibrid-intermediet mode
+			if (pick == "Dihibrid intermediet") {
+				document.getElementById("gamet3").style.display = "inline";
+				document.getElementById("gamet4").style.display = "inline";
+				document.getElementById("gamet5").style.display = "inline";
+				document.getElementById("gamet6").style.display = "inline";
+				document.getElementById("gamet3-value").style.display = "inline";
+				document.getElementById("gamet4-value").style.display = "inline";
+				document.getElementById("gamet5-value").style.display = "inline";
+				document.getElementById("gamet6-value").style.display = "inline";
+			}
+		}
+	</script>	
+	<script>	
+		function GO() {
+			var pick= document.getElementById("pick").value;
+			
+			// automatics gamet inner
+			var geninput1= document.getElementById("gen-input1").value;//Mm
+			var geninput2= document.getElementById("gen-input2").value;//Mm
+			
+			// summon rows, cols
+			document.getElementById("row1").value= geninput1[0];//M
+			document.getElementById("row2").value= geninput1[1];//m
+			document.getElementById("col1").value= geninput2[0];//M
+			document.getElementById("col2").value= geninput2[1];//
+			
+			// set outputcols
+			var outputcol1= geninput1[0] + geninput2[0];
+			var outputcol2= geninput1[1] + geninput2[0];
+			var outputcol3= geninput1[0] + geninput2[1];
+			var outputcol4= geninput1[1] + geninput2[1];
+			
+			// set gamet(x)value
+			var gamet1value= document.getElementById("gamet1-value").value;//me
+			var gamet2value= document.getElementById("gamet2-value").value;//pu
+			var gamet3value= document.getElementById("gamet3-value").value;//pi
+			var gamet4value= document.getElementById("gamet4-value").value;//pi
+			var gamet5value= document.getElementById("gamet5-value").value;//pi
+			var gamet6value= document.getElementById("gamet6-value").value;//pi
+			
+			// set gametvalue(x) value 
+			if (outputcol1 == geninput2[1] + geninput2[1]) {
+				gametvalue1 = " ("+ gamet2value +")";
+			} else {
+				gametvalue1 = " ("+ gamet1value +")";
+			}
+			if (outputcol2 == geninput2[1] + geninput2[1]) {
+				gametvalue2 = " ("+ gamet2value +")";
+			} else {
+				gametvalue2 = " ("+ gamet1value +")";
+			}
+			if (outputcol3 == geninput2[1] + geninput2[1]) {
+				gametvalue3 = " ("+ gamet2value +")";
+			} else {
+				gametvalue3 = " ("+ gamet1value +")";
+			}
+			if (outputcol4 == geninput2[1] + geninput2[1]) {
+				gametvalue4 = " ("+ gamet2value +")";
+			} else {
+				gametvalue4 = " ("+ gamet1value +")";
+			}
+			
+			// monohibrid intermediet mode
+			if (pick == "Monohibrid intermediet") {
+				if (outputcol1 == geninput1[0] + geninput2[1] ) {
+					gametvalue1 = " ("+ gamet3value +")";
+				} 
+				if (outputcol2 == geninput1[0] + geninput2[1] ) {
+					gametvalue2 = " ("+ gamet3value +")";
+				}
+				if (outputcol3 == geninput1[0] + geninput2[1] ) {
+					gametvalue3 = " ("+ gamet3value +")";
+				}
+				if (outputcol4 == geninput1[0] + geninput2[1] ) {
+					gametvalue4 = " ("+ gamet3value +")";
+				} 
+			}
+			
+			// albino mode
+			if ( pick == "Albino") {
+				if (outputcol1 == geninput1[0].toLowerCase() + geninput1[0].toLowerCase() ) {
+					gametvalue1 = "(albino)";
+				} else {
+					gametvalue1 = "(normal)";
+				}
+				if (outputcol2 == geninput1[0].toLowerCase() + geninput1[0].toLowerCase() ) {
+					gametvalue2 = "(albino)";
+				} else {
+					gametvalue2 = "(normal)";
+				}
+				if (outputcol3 == geninput1[0].toLowerCase() + geninput1[0].toLowerCase() ) {
+					gametvalue3 = "(albino)";
+				} else {
+					gametvalue3 = "(normal)";
+				}
+				if (outputcol4 == geninput1[0].toLowerCase() + geninput1[0].toLowerCase() ) {
+					gametvalue4 = "(albino)";
+				} else {
+					gametvalue4 = "(normal)";
+				}
+			}
+			
+			// order arrangement for color blind & hemofilia mode
+			if (pick == "Buta warna" || pick == "Hemofilia") {
+				if (outputcol1 == "XY") {outputcol1 = "YX"}; if (outputcol1 == "xY") {outputcol1 = "Yx"}; if (outputcol1 == "xX") {outputcol1 = "Xx"}
+				if (outputcol2 == "XY") {outputcol2 = "YX"}; if (outputcol2 == "xY") {outputcol2 = "Yx"}; if (outputcol2 == "xX") {outputcol2 = "Xx"}
+				if (outputcol3 == "XY") {outputcol3 = "YX"}; if (outputcol3 == "xY") {outputcol3 = "Yx"}; if (outputcol3 == "xX") {outputcol3 = "Xx"}
+				if (outputcol4 == "XY") {outputcol4 = "YX"}; if (outputcol4 == "xY") {outputcol4 = "Yx"}; if (outputcol4 == "xX") {outputcol4 = "Xx"}
+			}
+			
+			// Color blind & hemofilia mode
+			if ( pick == "Buta warna" || pick == "Hemofilia" ) {
+				if (outputcol1 == "xx" ) {
+					gametvalue1 = "(wanita "+ gamet3value + ")";
+				} else if (outputcol1 == "Yx") {
+					gametvalue1 = "(" + gamet3value + ")";
+				} else if (outputcol1 == "Xx") {
+					gametvalue1 = "(carrier)";
+				} else {
+					gametvalue1 = "(normal)";
+				}
+				
+				if (outputcol2 == "xx" ) {
+					gametvalue2 = "(wanita "+ gamet3value + ")";
+				} else if (outputcol2 == "Yx") {
+					gametvalue2 = "(" + gamet3value + ")";
+				} else if (outputcol2 == "Xx") {
+					gametvalue2 = "(carrier)";
+				} else {
+					gametvalue2 = "(normal)";
+				}
+				
+				if (outputcol3 == "xx" ) {
+					gametvalue3 = "(wanita "+ gamet3value + ")";
+				} else if (outputcol3 == "Yx") {
+					gametvalue3 = "(" + gamet3value + ")";
+				} else if (outputcol3 == "Xx") {
+					gametvalue3 = "(carrier)";
+				} else {
+					gametvalue3 = "(normal)";
+				}
+				
+				if (outputcol4 == "xx" ) {
+					gametvalue4 = "(wanita "+ gamet3value + ")";
+				} else if (outputcol4 == "Yx") {
+					gametvalue4 = "(" + gamet3value + ")";
+				} else if (outputcol4 == "Xx") {
+					gametvalue4 = "(carrier)";
+				} else {
+					gametvalue4 = "(normal)";
+				}
+			}
+			
+			// order arrangement(monohibrid)
+			if (outputcol1 == geninput1[0].toLowerCase() + geninput1[0].toUpperCase() ) {
+				outputcol1 = geninput1[0].toUpperCase() + geninput1[0].toLowerCase();
+			}
+			if (outputcol2 == geninput1[0].toLowerCase() + geninput1[0].toUpperCase() ) {
+				outputcol2 = geninput1[0].toUpperCase() + geninput1[0].toLowerCase();
+			}
+			if (outputcol3 == geninput1[0].toLowerCase() + geninput1[0].toUpperCase() ) {
+				outputcol3 = geninput1[0].toUpperCase() + geninput1[0].toLowerCase();
+			}
+			if (outputcol4 == geninput1[0].toLowerCase() + geninput1[0].toUpperCase() ) {
+				outputcol4 = geninput1[0].toUpperCase() + geninput1[0].toLowerCase();
+			}
+			
+			//summon outputcols + gametvalue(x)
+			document.getElementById("output-col1").innerHTML = outputcol1 + gametvalue1;//MM;
+			document.getElementById("output-col2").innerHTML = outputcol2 + gametvalue2;//mM;
+			document.getElementById("output-col3").innerHTML = outputcol3 + gametvalue3;//Mm;
+			document.getElementById("output-col4").innerHTML = outputcol4 + gametvalue4;//mm;	
+		}
+	</script>
+	<script>
+		function GO2() {
+			// automatics gamet inner
+			var geninput1= document.getElementById("gen-input1").value;
+			var geninput2= document.getElementById("gen-input2").value;
+			
+			var pick= document.getElementById("pick").value;
+			
+			
+			// set & summon rows, cols
+			var row1= document.getElementById("-row1").value= geninput1[0] + geninput1[2];
+			var row2= document.getElementById("-row2").value= geninput1[0] + geninput1[3];
+			var row3= document.getElementById("-row3").value= geninput1[1] + geninput1[2];
+			var row4= document.getElementById("-row4").value= geninput1[1] + geninput1[3];
+		 
+			var col1= document.getElementById("-col1").value= geninput2[0] + geninput2[2];
+			var col2= document.getElementById("-col2").value= geninput2[0] + geninput2[3];
+			var col3= document.getElementById("-col3").value= geninput2[1] + geninput2[2];
+			var col4= document.getElementById("-col4").value= geninput2[1] + geninput2[3];
+			
+			// set sub outpulcols
+			var outputcol1a= row1[0] + col1[0];/**/var outputcol1b= row1[1] + col1[1];
+			var outputcol2a= row2[0] + col1[0];/**/var outputcol2b= row2[1] + col1[1];
+			var outputcol3a= row3[0] + col1[0];/**/var outputcol3b= row3[1] + col1[1];
+			var outputcol4a= row4[0] + col1[0];/**/var outputcol4b= row4[1] + col1[1];
+			
+			var outputcol5a= row1[0] + col2[0];/**/var outputcol5b= row1[1] + col2[1];
+			var outputcol6a= row2[0] + col2[0];/**/var outputcol6b= row2[1] + col2[1];
+			var outputcol7a= row3[0] + col2[0];/**/var outputcol7b= row3[1] + col2[1];
+			var outputcol8a= row4[0] + col2[0];/**/var outputcol8b= row4[1] + col2[1];
+			
+			var outputcol9a= row1[0] + col3[0];/**/var outputcol9b= row1[1] + col3[1];
+			var outputcol10a= row2[0] + col3[0];/**/var outputcol10b= row2[1] + col3[1];
+			var outputcol11a= row3[0] + col3[0];/**/var outputcol11b= row3[1] + col3[1];
+			var outputcol12a= row4[0] + col3[0];/**/var outputcol12b= row4[1] + col3[1];
+			
+			var outputcol13a= row1[0] + col4[0];/**/var outputcol13b= row1[1] + col4[1];
+			var outputcol14a= row2[0] + col4[0];/**/var outputcol14b= row2[1] + col4[1];
+			var outputcol15a= row3[0] + col4[0];/**/var outputcol15b= row3[1] + col4[1];
+			var outputcol16a= row4[0] + col4[0];/**/var outputcol16b= row4[1] + col4[1];
+		
+			// order arrangement
+			if (outputcol1a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol1a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol1b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol1b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			if (outputcol2a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol2a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol2b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol2b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			if (outputcol3a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol3a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol3b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol3b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			if (outputcol4a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol4a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol4b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol4b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			
+			if (outputcol5a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol5a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol5b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol5b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			if (outputcol6a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol6a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol6b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol6b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			if (outputcol7a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol7a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol7b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol7b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			if (outputcol8a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol8a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol8b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol8b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			
+			if (outputcol9a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol9a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol9b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol9b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			if (outputcol10a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol10a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol10b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol10b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			if (outputcol11a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol11a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol11b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol11b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			if (outputcol12a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol12a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol12b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol12b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			
+			if (outputcol13a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol13a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol13b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol13b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			if (outputcol14a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol14a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol14b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol14b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			if (outputcol15a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol15a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol15b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol15b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			if (outputcol16a == row1[0].toLowerCase() + row1[0].toUpperCase()) /**/{outputcol16a = row1[0].toUpperCase() + row1[0].toLowerCase();}
+			if (outputcol16b == row1[1].toLowerCase() + row1[1].toUpperCase()) /**/{outputcol16b = row1[1].toUpperCase() + row1[1].toLowerCase();}
+			
+			
+			// set gamet(x)value
+			var gamet1value= document.getElementById("gamet1-value").value;//me
+			var gamet2value= document.getElementById("gamet2-value").value;//pu
+			var gamet3value= document.getElementById("gamet3-value").value;//pi
+			
+			var gamet4value= document.getElementById("gamet4-value").value;//ti
+			var gamet5value= document.getElementById("gamet5-value").value;//re
+			var gamet6value= document.getElementById("gamet6-value").value;//se
+			
+			// set gametvalue(x) value 
+			if (outputcol1a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue1a = gamet2value;} else/**/ {gametvalue1a = gamet1value;}
+			if (outputcol1b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue1b = gamet5value;} else/**/ {gametvalue1b = gamet4value;}
+			if (outputcol2a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue2a = gamet2value;} else/**/ {gametvalue2a = gamet1value;}
+			if (outputcol2b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue2b = gamet5value;} else/**/ {gametvalue2b = gamet4value;}
+			if (outputcol3a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue3a = gamet2value;} else/**/ {gametvalue3a = gamet1value;}
+			if (outputcol3b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue3b = gamet5value;} else/**/ {gametvalue3b = gamet4value;}
+			if (outputcol4a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue4a = gamet2value;} else/**/ {gametvalue4a = gamet1value;}
+			if (outputcol4b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue4b = gamet5value;} else/**/ {gametvalue4b = gamet4value;}
+			
+			if (outputcol5a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue5a = gamet2value;} else/**/ {gametvalue5a = gamet1value;}
+			if (outputcol5b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue5b = gamet5value;} else/**/ {gametvalue5b = gamet4value;}
+			if (outputcol6a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue6a = gamet2value;} else/**/ {gametvalue6a = gamet1value;}
+			if (outputcol6b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue6b = gamet5value;} else/**/ {gametvalue6b = gamet4value;}
+			if (outputcol7a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue7a = gamet2value;} else/**/ {gametvalue7a = gamet1value;}
+			if (outputcol7b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue7b = gamet5value;} else/**/ {gametvalue7b = gamet4value;}
+			if (outputcol8a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue8a = gamet2value;} else/**/ {gametvalue8a = gamet1value;}
+			if (outputcol8b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue8b = gamet5value;} else/**/ {gametvalue8b = gamet4value;}
+			
+			if (outputcol9a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue9a = gamet2value;} else/**/ {gametvalue9a = gamet1value;}
+			if (outputcol9b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue9b = gamet5value;} else/**/ {gametvalue9b = gamet4value;}
+			if (outputcol10a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue10a = gamet2value;} else/**/ {gametvalue10a = gamet1value;}
+			if (outputcol10b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue10b = gamet5value;} else/**/ {gametvalue10b = gamet4value;}
+			if (outputcol11a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue11a = gamet2value;} else/**/ {gametvalue11a = gamet1value;}
+			if (outputcol11b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue11b = gamet5value;} else/**/ {gametvalue11b = gamet4value;}
+			if (outputcol12a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue12a = gamet2value;} else/**/ {gametvalue12a = gamet1value;}
+			if (outputcol12b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue12b = gamet5value;} else/**/ {gametvalue12b = gamet4value;}
+			
+			if (outputcol13a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue13a = gamet2value;} else/**/ {gametvalue13a = gamet1value;}
+			if (outputcol13b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue13b = gamet5value;} else/**/ {gametvalue13b = gamet4value;}
+			if (outputcol14a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue14a = gamet2value;} else/**/ {gametvalue14a = gamet1value;}
+			if (outputcol14b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue14b = gamet5value;} else/**/ {gametvalue14b = gamet4value;}
+			if (outputcol15a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue15a = gamet2value;} else/**/ {gametvalue15a = gamet1value;}
+			if (outputcol15b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue15b = gamet5value;} else/**/ {gametvalue15b = gamet4value;}
+			if (outputcol16a == row1[0].toLowerCase() + row1[0].toLowerCase())/**/ {gametvalue16a = gamet2value;} else/**/ {gametvalue16a = gamet1value;}
+			if (outputcol16b == row1[1].toLowerCase() + row1[1].toLowerCase())/**/ {gametvalue16b = gamet5value;} else/**/ {gametvalue16b = gamet4value;}
+			
+			
+			if (pick == "Dihibrid intermediet") {
+				if (outputcol1a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue1a = gamet3value;}
+				if (outputcol1b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue1b = gamet6value;} 
+				if (outputcol2a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue2a = gamet3value;}
+				if (outputcol2b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue2b = gamet6value;}
+				if (outputcol3a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue3a = gamet3value;}
+				if (outputcol3b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue3b = gamet6value;}
+				if (outputcol4a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue4a = gamet3value;}
+				if (outputcol4b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue4b = gamet6value;}
+				
+				if (outputcol5a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue5a = gamet3value;}
+				if (outputcol5b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue5b = gamet6value;} 
+				if (outputcol6a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue6a = gamet3value;}
+				if (outputcol6b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue6b = gamet6value;}
+				if (outputcol7a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue7a = gamet3value;}
+				if (outputcol7b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue7b = gamet6value;}
+				if (outputcol8a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue8a = gamet3value;}
+				if (outputcol8b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue8b = gamet6value;}
+				
+				if (outputcol9a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue9a = gamet3value;}
+				if (outputcol9b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue9b = gamet6value;}
+				if (outputcol10a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue10a = gamet3value;}
+				if (outputcol10b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue10b = gamet6value;}
+				if (outputcol11a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue11a = gamet3value;}
+				if (outputcol11b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue11b = gamet6value;}
+				if (outputcol12a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue12a = gamet3value;}
+				if (outputcol12b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue12b = gamet6value;}
+				
+				if (outputcol13a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue13a = gamet3value;}
+				if (outputcol13b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue13b = gamet6value;}
+				if (outputcol14a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue14a = gamet3value;}
+				if (outputcol14b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue14b = gamet6value;}
+				if (outputcol15a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue15a = gamet3value;}
+				if (outputcol15b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue15b = gamet6value;}
+				if (outputcol16a == row1[0].toUpperCase() + row1[0].toLowerCase() ) /**/{gametvalue16a = gamet3value;}
+				if (outputcol16b == row1[1].toUpperCase() + row1[1].toLowerCase() ) /**/{gametvalue16b = gamet6value;}
+			}
+			
+			//summon outputcols + gametvalue(x)
+			document.getElementById("-output-col1").innerHTML = outputcol1a + outputcol1b + "<br>" + "(" + gametvalue1a + ", "+ gametvalue1b + ")";
+			document.getElementById("-output-col2").innerHTML = outputcol2a + outputcol2b + "<br>" + "(" + gametvalue2a + ", "+ gametvalue2b + ")";
+			document.getElementById("-output-col3").innerHTML = outputcol3a + outputcol3b + "<br>" + "(" + gametvalue3a + ", "+ gametvalue3b + ")";
+			document.getElementById("-output-col4").innerHTML = outputcol4a + outputcol4b + "<br>" + "(" + gametvalue4a + ", "+ gametvalue4b + ")";
+	
+			document.getElementById("-output-col5").innerHTML = outputcol5a + outputcol5b + "<br>" + "(" + gametvalue5a + ", "+ gametvalue5b + ")";
+			document.getElementById("-output-col6").innerHTML = outputcol6a + outputcol6b + "<br>" + "(" + gametvalue6a + ", "+ gametvalue6b + ")";
+			document.getElementById("-output-col7").innerHTML = outputcol7a + outputcol7b + "<br>" + "(" + gametvalue7a + ", "+ gametvalue7b + ")";
+			document.getElementById("-output-col8").innerHTML = outputcol8a + outputcol8b + "<br>" + "(" + gametvalue8a + ", "+ gametvalue8b + ")";
+
+			document.getElementById("-output-col9").innerHTML = outputcol9a + outputcol9b + "<br>" + "(" + gametvalue9a + ", "+ gametvalue9b + ")";
+			document.getElementById("-output-col10").innerHTML = outputcol10a + outputcol10b + "<br>" + "(" + gametvalue10a + ", "+ gametvalue10b + ")";
+			document.getElementById("-output-col11").innerHTML = outputcol11a + outputcol11b + "<br>" + "(" + gametvalue11a + ", "+ gametvalue11b + ")";
+			document.getElementById("-output-col12").innerHTML = outputcol12a + outputcol12b + "<br>" + "(" + gametvalue12a + ", "+ gametvalue12b + ")";
+	
+			document.getElementById("-output-col13").innerHTML = outputcol13a + outputcol13b + "<br>" + "(" + gametvalue13a + ", "+ gametvalue13b + ")";
+			document.getElementById("-output-col14").innerHTML = outputcol14a + outputcol14b + "<br>" + "(" + gametvalue14a + ", "+ gametvalue14b + ")";
+			document.getElementById("-output-col15").innerHTML = outputcol15a + outputcol15b + "<br>" + "(" + gametvalue15a + ", "+ gametvalue15b + ")";
+			document.getElementById("-output-col16").innerHTML = outputcol16a + outputcol16b + "<br>" + "(" + gametvalue16a + ", "+ gametvalue16b + ")";
+		}
+	</script>
+</body>
+</html>
