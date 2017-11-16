@@ -9,6 +9,7 @@ int main() {
     
     b = NULL;
     for(;;){
+        cout << "Enter -99 to pass." << endl;
         cout << "The number is ";
         cin >> num ;
         if(num == -99){
