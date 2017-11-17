@@ -7,7 +7,7 @@
 
 using namespace std;
 
-int coinToss(int in){
+int coinToss(){
     int r = rand() % 2 + 1;
     return r;
 }
@@ -19,7 +19,7 @@ void start(){
     cin >> in;
 
     for(i = 0; i < in; i++){
-        if(coinToss(in) == 1){
+        if(coinToss() == 1){
             cout << "Head" << endl;
         }else{
             cout << "Tail" << endl;
