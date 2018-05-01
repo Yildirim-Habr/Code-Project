@@ -10,8 +10,6 @@ int size = 3;//min. 2
 int width = 3;
 int length = 2;
 int range = 1;//patent
-int base = 1;//patent
-
 
 //rope	
 range = 1;
